@@ -590,7 +590,7 @@ public final class Repository {
 	public func add(path: String) -> Result<(), NSError> {
 		var dirPointer = UnsafeMutablePointer<Int8>(mutating: (path as NSString).utf8String)
 		var paths = withExtendedLifetime(&dirPointer) {
-			git_strarray(strings: $0, count: 1)
+			git_strarray(strings: &dirPointer, count: 1)
 		}
 		return unsafeIndex().flatMap { index in
 			defer { git_index_free(index) }
